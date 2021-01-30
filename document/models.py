@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from config import constants
@@ -82,7 +83,7 @@ class Nlp(models.Model):
     document = models.ForeignKey(Document, on_delete=models.CASCADE, null=True)
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, null=True)
     position = models.IntegerField(verbose_name=_('Position'), null=True, default=None)
-    ocr_word_ids = models.JSONField(verbose_name=_('OCR word IDs'), null=True, default=None, blank=True)
+    ocr_word_ids = ArrayField(models.IntegerField(), null=True, blank=True)
     status = models.SmallIntegerField(verbose_name=_("Status"), choices=constants.STATUS_RECOGNITION_CHOICES, default=0)
     ocr_text = models.TextField(verbose_name=_("Ocr text"), max_length=2000, blank=True, null=True)
     is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
