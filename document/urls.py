@@ -5,6 +5,7 @@ urlpatterns = [
 
     path('nlp_result/', NlpResultListView.as_view()),
     path('filter_malware/', FilterMalwareListView.as_view()),
-    path('nlp_result_filtered/<str:value>/', NlpResultFilteredListView.as_view())
+    path('nlp_result_filtered/<str:value>/', NlpResultFilteredListView.as_view()),
+    path('document_upload/', DocumentUpload.as_view()),
 
 ]

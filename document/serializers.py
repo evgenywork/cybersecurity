@@ -11,7 +11,8 @@ class NlpResultListSerializer(serializers.ModelSerializer):
                  "country", "city", "geolocation", "time_stamp", "ioc", "technique")
 
 
-# class DocumentListSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = Document
+class DocumentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Document
+        fields = ["id", "original_name", "file_path"]

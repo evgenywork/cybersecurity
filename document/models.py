@@ -32,9 +32,9 @@ class DocumentType(models.Model):
 # Create your models here.
 class Document(models.Model):
     # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
-    document_type = models.ForeignKey(DocumentType, on_delete=models.SET_NULL, null=True)
-    original_name = models.CharField(verbose_name=_('Original name'), max_length=255, null=True, unique=True)
+    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, blank=True, default=1)
+    document_type = models.ForeignKey(DocumentType, on_delete=models.SET_NULL, null=True, default=1)
+    original_name = models.CharField(verbose_name=_('Original name'), max_length=255, null=True)
     description = models.TextField(verbose_name=_('Description'), max_length=2000, null=True, blank=True)
     file_path = models.FileField(verbose_name=_('File path'), upload_to='files/%Y/%m/%d/', null=True, blank=True)
     mime_type = models.CharField(verbose_name=_('Mime type'), max_length=50, null=True, blank=True)
