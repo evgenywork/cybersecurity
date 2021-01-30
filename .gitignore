@@ -21,5 +21,5 @@ cron_lock/*
 __pycache__/
 .DS_Store
 venv/
-document_processing/settings_local.py
+config/settings_local.py
 send_pages_to_server.sh
