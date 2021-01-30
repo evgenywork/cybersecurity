@@ -23,3 +23,4 @@ __pycache__/
 venv/
 config/settings_local.py
 send_pages_to_server.sh
+static_root/
