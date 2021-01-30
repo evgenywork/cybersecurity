@@ -36,7 +36,7 @@ class Document(models.Model):
     original_name = models.CharField(verbose_name=_('Original name'), max_length=255, null=True, unique=True)
     description = models.TextField(verbose_name=_('Description'), max_length=2000, null=True, blank=True)
     file_path = models.FileField(verbose_name=_('File path'), upload_to='files/%Y/%m/%d/', null=True, blank=True)
-    mime_type = models.CharField(verbose_name=_('Mime type'), max_length=50, null=True)
+    mime_type = models.CharField(verbose_name=_('Mime type'), max_length=50, null=True, blank=True)
     is_processed = models.BooleanField(verbose_name=_('Is processed'), default=False)
     is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
     created_at = models.DateTimeField(verbose_name=_('Created date'), auto_now_add=True)
@@ -91,3 +91,36 @@ class Nlp(models.Model):
 
     def __str__(self):
         return f'NlpID: {self.id}; Document: {self.document.id}; Attribute: {self.attribute.attribute_name} '
+
+
+class NlpResult(models.Model):
+    """Таблица для синхронизации основных полей из nlp"""
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, null=True)
+    cve = models.CharField(verbose_name=_('CVE'), max_length=255, null=True, blank=True, db_index=True)
+    cwe = models.CharField(verbose_name=_('CWE'), max_length=255, null=True, blank=True, db_index=True)
+    software = models.CharField(verbose_name=_('SOFTWARE'), max_length=255, null=True, blank=True, db_index=True)
+    malware = models.CharField(verbose_name=_('MALWARE'), max_length=255, null=True, blank=True, db_index=True)
+    course_of_action = models.CharField(verbose_name=_('COURSE_OF_ACTION'), max_length=255, null=True, blank=True, db_index=True)
+    intrusion_set = models.CharField(verbose_name=_('INTRUSION_SET'), max_length=255, null=True, blank=True, db_index=True)
+    threat_actor = models.CharField(verbose_name=_('THREAT_ACTOR'), max_length=255, null=True, blank=True, db_index=True)
+    tool = models.CharField(verbose_name=_('TOOL'), max_length=255, null=True, blank=True, db_index=True)
+    attack_pattern = models.CharField(verbose_name=_('ATTACK_PATTERN'), max_length=255, null=True, blank=True, db_index=True)
+    industry = models.CharField(verbose_name=_('INDUSTRY'), max_length=255, null=True, blank=True, db_index=True)
+    mitre_attack = models.CharField(verbose_name=_('MITRE_ATTACK'), max_length=255, null=True, blank=True, db_index=True)
+    campaign = models.CharField(verbose_name=_('CAMPAIGN'), max_length=255, null=True, blank=True, db_index=True)
+    org = models.CharField(verbose_name=_('ORG'), max_length=255, null=True, blank=True, db_index=True)
+    country = models.CharField(verbose_name=_('COUNTRY'), max_length=255, null=True, blank=True, db_index=True)
+    city = models.CharField(verbose_name=_('CITY'), max_length=255, null=True, blank=True, db_index=True)
+    geolocation = models.CharField(verbose_name=_('GEOLOCATION'), max_length=255, null=True, blank=True, db_index=True)
+    time_stamp = models.DateTimeField(verbose_name=_('TIMESTAMP'), null=True, blank=True, db_index=True)
+    ioc = models.CharField(verbose_name=_('IOC'), max_length=255, null=True, blank=True, db_index=True)
+    technique = models.CharField(verbose_name=_('TECHNIQUE'), max_length=255, null=True, blank=True, db_index=True)
+    is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
+    created_at = models.DateTimeField(verbose_name=_('Created date'), auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name=_('Updated date'), auto_now=True, null=True)
+
+    class Meta:
+        db_table = 'document_nlp_result'
+
+    def __str__(self):
+        return f'NlpID: {self.id}; Document: {self.document.id} '

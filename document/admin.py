@@ -32,4 +32,8 @@ class OcrAdmin(admin.ModelAdmin):
     list_display = ("id", "ocr_text", "status", "is_active")
 
 
+@admin.register(NlpResult)
+class NlpResultAdmin(admin.ModelAdmin):
+    list_display = ("id", "document", "is_active")
+
 

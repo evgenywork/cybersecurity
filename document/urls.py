@@ -3,5 +3,6 @@ from .views import *
 
 urlpatterns = [
 
+    path('nlp_result/', NlpResultListView.as_view())
 
 ]
