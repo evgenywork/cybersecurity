@@ -16,3 +16,10 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = ["id", "original_name", "file_path"]
+
+
+class DocumentListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Document
+        fields = ["id", "original_name", "status", "created_at"]

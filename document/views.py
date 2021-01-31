@@ -10,6 +10,15 @@ from .models import *
 from .serializers import *
 
 
+class DocumentListView(APIView):
+
+    def get(self, request):
+        documents = Document.objects.filter(is_active=True)
+
+        serializer = DocumentListSerializer(documents, many=True)
+        return Response(serializer.data)
+
+
 class NlpResultListView(APIView):
 
     def get(self, request):
@@ -104,9 +113,12 @@ class DocumentUpload(APIView):
 class DocumentView(APIView):
 
     def get(self, request, document_id):
-        document = Document.objects.filter(id=document_id)
-
-        # document_name = document.original_name
+        try:
+            document = Document.objects.get(id=document_id)
+            print(document.original_name)
+        except Document.DoesNotExist:
+            print('Document.DoesNotExist')
+            return Response({"Error": "Document not found"}, status=status.HTTP_404_NOT_FOUND)
 
         words = Ocr.objects.filter(document_id=document_id)
 
@@ -132,12 +144,14 @@ class DocumentView(APIView):
 
         document_data = {
             "document_id": document_id,
-            # "document_type": document.document_type.document_type_name,
-            # "document_name": document_name,
+            "document_type": document.document_type.document_type_name,
+            "document_name": document.original_name,
             "nlp_table": nlp_list,
             "words": words_list,
         }
 
         response = Response(document_data, status=status.HTTP_200_OK)
         return response
+
+
 

@@ -8,5 +8,6 @@ urlpatterns = [
     path('nlp_result_filtered/<str:value>/', NlpResultFilteredListView.as_view()),
     path('document_upload/', DocumentUpload.as_view()),
     path('document_view/<int:document_id>/', DocumentView.as_view()),
+    path('documents/', DocumentListView.as_view()),
 
 ]
