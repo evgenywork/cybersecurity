@@ -99,3 +99,45 @@ class DocumentUpload(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DocumentView(APIView):
+
+    def get(self, request, document_id):
+        document = Document.objects.filter(id=document_id)
+
+        # document_name = document.original_name
+
+        words = Ocr.objects.filter(document_id=document_id)
+
+        words_list = []
+
+        for word in words:
+            words_list.append({
+                "id": word.id,
+                "ocr_text": word.ocr_text,
+                "user_text": word.user_text,
+                "status": word.status,
+            })
+
+        nlps = Nlp.objects.filter(document_id=document_id)
+
+        nlp_list = []
+        for nlp in nlps:
+            nlp_list.append({
+                "attribute_id": nlp.attribute_id,
+                "attribute_name": nlp.attribute.attribute_name,
+                "ocr_word_ids": nlp.ocr_word_ids,
+            })
+
+        document_data = {
+            "document_id": document_id,
+            # "document_type": document.document_type.document_type_name,
+            # "document_name": document_name,
+            "nlp_table": nlp_list,
+            "words": words_list,
+        }
+
+        response = Response(document_data, status=status.HTTP_200_OK)
+        return response
+
